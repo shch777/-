@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        display: block;
+        position: relative;
+        background-color: #000;
+        margin: 0;
+    }
+    h1{
+        color: #fff;
+    }
+    button{
+        font-size: 40px;
+        font-weight: bold;
+        background-color: #fff;
+        padding: 30px 80px;
+        margin: 50px;
+        color: red;
+        transition: all .5s ease-in-out;
+    }
+    button:hover{
+        background-color: red;
+        color: #fff;
+    }
+    .cousor_item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        margin: -50px 0 0 -50px ;
+        transition: all 1s ease-in-out;
+    }
+</style>
+<script>
+    let cousor;
+    let h1;
+    let x = 0;
+    let y = 0;
+    let mx = 0;
+    let my = 0;
+    let speed = 0.1;
+
+
+    window.onload = function(){
+        h1 = document.getElementsByTagName('h1')[0];
+        cousor =document.getElementsByClassName('cousor_item')[0];
+        window.addEventListener('click',mouseFunc,false);
+
+        function mouseFunc(e){
+            x = e.clientX;
+            y = e.clientY;
+            cousor.style.transform =  "translate("+ x +"px,"+ y +"px)";
+
+
+            //console.log(e.clientX , e.clientY);
+        }
+        //loop()
+    }
+
+    // function loop(){
+    //     //console.log(x , y)
+    //     mx += (x -mx) *speed
+    //     my += (y -my) *speed
+    //     h1.innerHTML = "x:"+ x + ', mx:' + mx;
+    //
+    //     window.requestAnimationFrame(loop);
+    // }
+
+</script>
+<body>
+    <h1>test</h1>
+    <div class="cousor_item"></div>
+    <button type="button" name="button">start</button>
+</body>
+</html>
