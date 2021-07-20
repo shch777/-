@@ -7,9 +7,21 @@
     <title>Document</title>
 </head>
 <style>
+    @keyframes yoyo {
+        
+        0%{
+            transform: translate(0,-0) ; 
+        }
+        50%{
+            transform: translate(0,-100px) ;
+        }
+        100%{
+            transform: translate(0,-0) ;
+        }
+    }
+
     body{
         display: block;
-        position: relative;
         background-color: #000;
         margin: 0;
         overflow: hidden;
@@ -19,6 +31,14 @@
         width: 100%;
         height: 100vh;
     }
+    .move{
+        min-width: 1920px;
+        height: 100vh;
+        position: relative;
+        left: 50%;
+        transform: translate(-960px,0);
+    
+    }
     h1{
         color: #fff;
         position: absolute;
@@ -26,12 +46,42 @@
         z-index: 10;
 
     }
+    .pipe{
+        position: absolute;
+        top: 200px;
+        width: 550px;
+        left: 0;
+        z-index: 9;
+    }
+    .text{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -30vw;
+        margin-top: -7vw;
+        z-index: 6;
+        animation: yoyo 4s ease-in-out infinite;
+        transform-style: preserve-3d;
+        perspective:300px
+    }
+    .text img{
+       width: 60vw;
+    }
     .model{
         position: absolute;
         top: 150px;
         left: calc(50% - 130px);
         width: 260px;
         z-index: 7;
+    }
+    .shadow{
+        position: absolute;
+        top: 700px;
+        left: calc(50% - 260px);
+        width: 280px;
+        z-index: 6;
+        filter:brightness(0.5);
+        transform-origin:right bottom;
     }
     .right_bg{
         position: absolute;
@@ -55,6 +105,7 @@
         right: -100px;
         z-index: 3;
     }
+    
     .floor{
         position: absolute;
         bottom: -90%;
@@ -76,16 +127,23 @@
         rightBg,
         bg03,
         bg02,
-        floor
+        floor,
+        shadow,
+        pipe
+        
     let speed = 0.009;
 
     window.onload = function(){
         h1 = document.getElementsByTagName('h1')[0];
         model = document.getElementsByClassName('model')[0];
+        text3d = document.getElementsByClassName('text3d')[0];
+        shadow = document.getElementsByClassName('shadow')[0];
         rightBg = document.getElementsByClassName('right_bg')[0];
         bg03 = document.getElementsByClassName('bg03')[0];
         bg02 = document.getElementsByClassName('bg02')[0];
         floor = document.getElementsByClassName('floor')[0];
+        pipe = document.getElementsByClassName('pipe')[0];
+
         window.addEventListener('mousemove',mouseFunc,false);
 
         function mouseFunc(e){
@@ -119,21 +177,31 @@
 
         h1.innerHTML = 'x:'+ x +', mx:'+mx;
         model.style.transform = 'translate(' + -(mx/10)+'px,' + -(my/10) +'px)';
+        shadow.style.transform = 'translate(' +  -(mx/10)+'px,' + -(my/10) +'px) rotate('+ -(mx/60) +'deg)';
         bg02.style.transform = 'translate(0px,' + -(mx/20) +'px)';
         bg03.style.transform = 'translate(' + (mx/5)+'px,' + (my/5) +'px)';
         floor.style.transform = 'translate(0px,' + (my/5) +'px) rotate('+ (mx/300) +'deg)';
-
+        pipe.style.transform = 'translate(' + (mx/4)+'px,' + (my/4) +'px)';
         rightBg.style.transform = 'translate(' + (rmx/30)+'px,' + (my/20) +'px)'
+        text3d.style.transform = 'translate3d(' + (mx/5)+'px,' + (my/5) +'px , 0px) rotate3d(0,1,0,'+ (mx/20) +'deg)';
+        
         window.requestAnimationFrame(loop);
     }
 
 </script>
 <body>
     <h1>test</h1>
-    <img src="layer-7.png" alt="모델" class="model">
-    <img src="layer-1.jpg" alt="벽" class="right_bg">
-    <img src="layer-2.png" alt="벽" class="bg02">
-    <img src="layer-3.png" alt="벽" class="bg03">
-    <img src="layer-4.png" alt="바닥" class="floor">
+    <div class="move">       
+        <img src="layer-7.png" alt="모델" class="model">
+        <div class="text">
+            <img src="masthead-logo.svg" class="text3d" alt="fix noting">
+        </div>
+        <img src="layer-5-feathered.png" alt="그림자" class="shadow">    
+        <img src="layer-1.jpg" alt="벽1" class="right_bg">
+        <img src="layer-2.png" alt="벽2" class="bg02">
+        <img src="layer-3.png" alt="벽3" class="bg03">
+        <img src="layer-4.png" alt="바닥" class="floor">
+        <img src="layer-9.png" alt="파이프" class="pipe">
+    </div>    
 </body>
 </html>
