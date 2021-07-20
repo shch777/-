@@ -21,12 +21,37 @@
     </div>
 </body>
 <script>
-    window.onload = function(){
-        window.addEventListener('mousemove', moveFunc ,false)
+    let x = 0,
+        y = 0,
+        mx = 0,
+        my = 0,
+        speed = 0.002,
+        imgArr,
+        vod;
 
-        function moveFunc(){
-            
+    window.onload = function(){
+        window.addEventListener('mousemove', moveFunc ,false);
+        imgArr = document.getElementsByTagName('img');
+        vod = document.getElementsByClassName('vod')[0];
+
+        function moveFunc(e){
+            x = e.clientX - window.innerWidth/2;
+            y = e.clientY - window.innerWidth/2;
+
         }
+        loop();
+    }
+
+    function loop(){
+        mx += (x - mx)*speed;
+        my += (y - my)*speed;
+        
+        imgArr[0].style.transform = 'translate('+ (mx/5)+'px,'+ (my/5) +'px)';
+        imgArr[1].style.transform = 'translate('+ (mx/6)+'px,'+ (my/6) +'px)';
+        imgArr[2].style.transform = 'translate('+ (mx/2)+'px,'+ (my/2) +'px)';
+        imgArr[3].style.transform = 'translate('+ (mx/6)+'px,'+ (my/6) +'px)';
+        vod.style.transform = 'translate('+ (mx/1)+'px,'+ (my/1) +'px)';
+        window.requestAnimationFrame(loop);
     }
 </script>
 </html>
