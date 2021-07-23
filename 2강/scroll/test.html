@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>페럴렉스</title>
+    <style>
+        body{
+            position: relative;
+            height: 10000px;
+            background: linear-gradient(150deg,#8FDBFE,#FF78A0, #85B4FF,#DEE7F4, #368EDB,#CA5B01,#7A1C02); 
+        }
+        h1{color: #777;}
+        .prograssBar{
+            position: fixed;           
+            background-color: #333;         
+            z-index: 1;
+        }
+      
+        .prograssBar01{
+            top: 0;
+            left: 0;
+            width: 100%; 
+            height: 5px;
+        }
+
+        .prograssBar02{
+            top: 40%;
+            left: 5%;
+            width: 5px; 
+            height: 300px;
+        }
+        .bar{
+            position: fixed;            
+        }
+        .prograssBar01 .bar{    
+            background-color: yellow;        
+            width: 0%; 
+            height: 5px;           
+            top: 0;
+            left: 0;
+            
+        }
+        .prograssBar02 .bar{
+            background-color: yellow;        
+            width: 5px; 
+            height: 300px;           
+            top: 40%;
+            left: 5%;
+            transform-origin: top;
+        }
+    </style>
+</head>
+<body>
+    <div class="prograssBar prograssBar01">
+        <div class="bar"></div>       
+    </div>
+    <div class="prograssBar prograssBar02">
+        <div class="bar"></div>       
+    </div>
+    <h1>스크롤</h1>
+</body>
+
+<script>
+    let scrollTop= 0;
+    let bar,
+        bar2,
+        prograssBar,
+        prograsstail;
+    window.onload = function(){
+        bar = document.getElementsByClassName('bar')[0]
+        bar2 = document.getElementsByClassName('bar')[1];
+        prograssBar= document.getElementsByClassName('prograssBar02')[0];       
+        prograssTop = prograssBar.offsetTop;
+
+        isState = false;
+
+        prograssBar.addEventListener('mousedown',function(e){
+            isState = true;
+            height = (e.clientY - prograssTop)/300 * 100;
+            if(height>100 ){
+                height == 100
+            }
+            bar2.style.transform = 'scaleY('+ height +'%)';
+
+        });
+        window.addEventListener('mousemove',function(e){
+            if(isState){
+               
+                height = (e.clientY - prograssTop)/300 * 100;
+                if( height > 100 ){
+                    height == 100
+                }
+                console.log(height)
+
+                bar2.style.transform = 'scaleY('+ height +'%)';
+            }
+            
+        });
+
+        window.addEventListener('mouseup',function(e){
+           
+            isState = false;
+          
+        });
+        
+    }
+
+    window.addEventListener('scroll',function(){
+        scrollTop = document.documentElement.scrollTop;
+        let per = Math.round( scrollTop / (document.body.scrollHeight-window.outerHeight)*100);
+        bar.style.width = per + '%';
+        bar2.style.transform = 'scaleY('+ per +'%)';
+        //console.log(per)
+    },false)
+
+   
+</script>
+</html>
